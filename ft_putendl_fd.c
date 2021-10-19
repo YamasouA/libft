@@ -2,10 +2,15 @@
 
 void    ft_putendl_fd(char *s, int fd)
 {
-    while (*s)
+    if (s == NULL)
+        write(fd, s, 0);
+    else
     {
-        write(fd, s, 1);
-        s++;
+        while (*s)
+        {
+            write(fd, s, 1);
+            s++;
+        }
+        write(fd, "\n", 1);
     }
-    write(fd, "\n", 1);
 }

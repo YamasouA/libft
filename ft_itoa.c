@@ -7,10 +7,13 @@ int count(int n)
 
     n_cpy = (long)n;
     cnt = 0;
-    if (n_cpy < 0)
-        n_cpy *= -1;
     if (n_cpy == 0)
         return 1;
+    if (n_cpy < 0)
+    {
+        n_cpy *= -1;
+        cnt++;
+    }
     while (n_cpy > 0)
     {
         cnt++;
@@ -19,6 +22,17 @@ int count(int n)
     return cnt;
 }
 
+#include "stdio.h"
+void    add_list(char *ptr, long n, int pos)
+{
+    if (n <= 9)
+        ptr[pos] = n + '0';
+    else
+    {
+        add_list(ptr, n / 10, pos - 1);
+        ptr[pos] = n % 10 + '0';
+    }
+}
 char    *ft_itoa(int n)
 {
     long    n_cpy;
@@ -28,17 +42,26 @@ char    *ft_itoa(int n)
     
     n_cpy = (long)n;
     len = count(n);
-    ptr = (char *)malloc(sizeof(char *) * len);
+    ptr = (char *)malloc(sizeof(char) * (len + 1));
+    if (ptr == NULL)
+        return NULL;
     ptr_cpy = ptr;
     if (n_cpy < 0)
     {
         n_cpy *= -1;
-        *ptr++ = '-';
+        ptr[0] = '-';
     }
-    while (n_cpy > 0)
-    {
-        *ptr++ = (n_cpy % 10) + '0';
-        n_cpy /= 10;
-    }
+    add_list(ptr, n_cpy, len - 1);
+    ptr += len;
+    *ptr = '\0';
     return ptr_cpy;
 }
+
+// #include "stdio.h"
+// int main()
+// {
+//     int i = 0;
+//     int j = -2;
+//     printf("%d: %s\n", i, ft_itoa(i));
+//     printf("%d: %s\n", j, ft_itoa(j));
+// }

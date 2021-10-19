@@ -6,11 +6,13 @@ char    *ft_strmapi(char const *s, char (*f)(unsigned int , char))
     char    *ptr;
     int     idx;
 
-    len = ft_strlen(s);
-    ptr = (char *)malloc(sizeof(char *) * len + 1);
-    if (!ptr)
+    if (s == NULL)
         return NULL;
-    if (!f)
+    len = ft_strlen(s);
+    ptr = (char *)malloc(sizeof(char) * (len + 1));
+    if (ptr == NULL)
+        return NULL;
+    if (f == NULL)
         return NULL;
     idx = 0;
     while (s[idx])
